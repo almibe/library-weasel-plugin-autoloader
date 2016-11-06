@@ -40,7 +40,7 @@ class PluginAutoLoader () {
 
     fun start() {
         logger.log(LogService.LOG_INFO, "Starting Plugin Auto Loader")
-        rootPath = instanceFiles.getPath("/pluginDev/")
+        rootPath = instanceFiles.getPath("/plugin/")
         val installedBundles = ArrayList<Bundle>()
         try {
             rootPath.register(watchService, ENTRY_CREATE, ENTRY_DELETE, ENTRY_MODIFY)
