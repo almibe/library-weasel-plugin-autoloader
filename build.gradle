@@ -1,0 +1,25 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        mavenLocal()
+    }
+    dependencies {
+        classpath 'org.libraryweasel:library-weasel-gradle-plugin:0.0.1-SNAPSHOT'
+    }
+}
+
+apply plugin: 'org.libraryweasel.gradleplugin'
+
+group 'org.libraryweasel'
+version '0.1.0-SNAPSHOT'
+
+dependencies {
+    compile kotlinDep
+    compile libraryWeaselServoDep
+    compile libraryWeaselInstanceFilesDep
+}
+
+bundle {
+    instruction 'Import-Package', '*'
+    instruction 'Bundle-Activator', 'org.libraryweasel.pluginautoloader.Activator'
+}
