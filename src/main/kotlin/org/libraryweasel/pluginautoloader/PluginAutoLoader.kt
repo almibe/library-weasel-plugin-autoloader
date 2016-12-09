@@ -10,7 +10,7 @@ import org.libraryweasel.servo.Service
 import org.osgi.framework.Bundle
 import org.osgi.framework.BundleContext
 import org.osgi.framework.Constants
-import org.osgi.service.log.LogService
+import org.slf4j.LoggerFactory
 import java.nio.file.FileSystems
 import java.nio.file.Files
 import java.nio.file.Path
@@ -21,11 +21,9 @@ import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.atomic.AtomicBoolean
 
 @Component(PluginAutoLoader::class)
-class PluginAutoLoader () {
+class PluginAutoLoader {
     @Service
     private lateinit var instanceFiles: StaticContentAccess
-    @Service
-    private lateinit var logger: LogService
     private lateinit var bundleContext: BundleContext
 
     private lateinit var rootPath: Path
@@ -33,13 +31,16 @@ class PluginAutoLoader () {
     private val pathToBundle = ConcurrentHashMap<String, Bundle>()
     private val isRunning = AtomicBoolean(false)
 
+    val logger = LoggerFactory.getLogger(PluginAutoLoader::class.java)
+
     fun stop() {
+        logger.info("Stopping Plugin Auto Loader")
         isRunning.compareAndSet(true, false)
         watchService.close()
     }
 
     fun start() {
-        logger.log(LogService.LOG_INFO, "Starting Plugin Auto Loader")
+        logger.info("Starting Plugin Auto Loader")
         rootPath = instanceFiles.getPath("/plugin/")
         val installedBundles = ArrayList<Bundle>()
         try {
@@ -120,7 +121,7 @@ class PluginAutoLoader () {
 
     //TODO all three of these methods need revisited at some point
     private fun addBundle(bundleFile: Path) {
-        logger.log(LogService.LOG_INFO, "Auto Adding Plugin: " + bundleFile.toString())
+        logger.info("Auto Adding Plugin: {}", bundleFile.toString())
         try {
             val bundle = bundleContext.installBundle("file:" + bundleFile.toFile().absolutePath)
             pathToBundle.put(bundleFile.toAbsolutePath().toString(), bundle)
@@ -133,20 +134,20 @@ class PluginAutoLoader () {
     }
 
     private fun restartBundle(bundleFile: Path) {
-        logger.log(LogService.LOG_INFO, "Auto Restarting Plugin: " + bundleFile.toString())
+        logger.info("Auto Restarting Plugin: {}", bundleFile.toString())
         //TODO there's probably a better way to do this
         removeBundle(bundleFile)
         addBundle(bundleFile)
     }
 
     private fun removeBundle(bundleFile: Path) {
-        logger.log(LogService.LOG_INFO, "Auto Removing Plugin: " + bundleFile.toString())
+        logger.info("Auto Removing Plugin: {}", bundleFile.toString())
         try {
             val bundle = pathToBundle.remove(bundleFile.toString())
             bundle?.stop()
             bundle?.uninstall()
         } catch (ex: Exception) {
-            logger.log(LogService.LOG_ERROR, "Error removing bundle", ex)
+            logger.error("Error removing bundle", ex)
         }
     }
 
