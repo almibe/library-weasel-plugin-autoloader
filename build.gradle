@@ -1,17 +1,19 @@
 buildscript {
     repositories {
-        mavenCentral()
         mavenLocal()
+        jcenter()
     }
     dependencies {
-        classpath 'org.libraryweasel:library-weasel-gradle-plugin:0.0.1-SNAPSHOT'
+        classpath 'org.almibe:easy-pub-plugin:0.3.0'
+        classpath 'org.libraryweasel:library-weasel-gradle-plugin:0.2.0-SNAPSHOT'
     }
 }
 
+apply plugin: 'org.almibe.easypubplugin'
 apply plugin: 'org.libraryweasel.gradleplugin'
 
 group 'org.libraryweasel'
-version '0.1.0-SNAPSHOT'
+version '0.1.0'
 
 dependencies {
     compile slf4jApiDep
