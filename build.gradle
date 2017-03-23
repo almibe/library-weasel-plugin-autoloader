@@ -5,7 +5,7 @@ buildscript {
     }
     dependencies {
         classpath 'org.almibe:easy-pub-plugin:0.3.0'
-        classpath 'org.libraryweasel:library-weasel-gradle-plugin:0.2.0-SNAPSHOT'
+        classpath 'org.libraryweasel:library-weasel-gradle-plugin:0.4.0-SNAPSHOT'
     }
 }
 
@@ -16,10 +16,10 @@ group 'org.libraryweasel'
 version '0.2.0-SNAPSHOT'
 
 dependencies {
-    compile slf4jApiDep
-    compile kotlinDep
-    compile libraryWeaselServoDep
-    compile libraryWeaselInstanceFilesDep
+    compile pluginDeps.slf4jApiDep.id
+    compile pluginDeps.kotlinDep.id
+    compile pluginDeps.libraryWeaselServoDep.id
+    compile pluginDeps.libraryWeaselInstanceFilesDep.id
 }
 
 bundle {

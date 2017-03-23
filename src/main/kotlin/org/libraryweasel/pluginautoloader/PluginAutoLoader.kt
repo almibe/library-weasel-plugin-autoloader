@@ -4,7 +4,7 @@
 
 package org.libraryweasel.pluginautoloader
 
-import org.libraryweasel.applicationpaths.api.StaticContentAccess
+import org.libraryweasel.instancefiles.api.InstanceFilesAccess
 import org.libraryweasel.servo.Component
 import org.libraryweasel.servo.Service
 import org.osgi.framework.Bundle
@@ -23,7 +23,7 @@ import java.util.concurrent.atomic.AtomicBoolean
 @Component(PluginAutoLoader::class)
 class PluginAutoLoader {
     @Service
-    private lateinit var instanceFiles: StaticContentAccess
+    private lateinit var instanceFiles: InstanceFilesAccess
     private lateinit var bundleContext: BundleContext
 
     private lateinit var rootPath: Path
