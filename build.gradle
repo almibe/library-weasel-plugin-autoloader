@@ -16,10 +16,9 @@ group 'org.libraryweasel'
 version '0.2.0-SNAPSHOT'
 
 dependencies {
-    compile pluginDeps.slf4jApiDep.id
+    //compile pluginDeps.slf4jApiDep.id
     compile pluginDeps.kotlinDep.id
     compile pluginDeps.libraryWeaselServoDep.id
-    compile pluginDeps.libraryWeaselInstanceFilesDep.id
 }
 
 bundle {

@@ -13,7 +13,7 @@ import org.osgi.framework.BundleContext
 class Activator : DependencyActivatorBase(), BundleActivator {
     override fun init(context: BundleContext, manager: DependencyManager) {
         val registrar = LibraryWeaselComponentRegistrar(manager)
-        registrar.register(PluginAutoLoader::class.java)
+     //   registrar.register(PluginAutoLoader::class.java)
     }
 
     override fun destroy(context: BundleContext, manager: DependencyManager) {
